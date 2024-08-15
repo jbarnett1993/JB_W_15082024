@@ -12,22 +12,16 @@ sids = ['EURUSD Curncy', 'TZT1 Comdty']
 pxs = LocalTerminal.get_historical(sids, "PX_LAST", dt.datetime.today() - relativedelta(years=5), dt.datetime.today())
 pxs = pxs.as_frame()
 
-# Calculate returns: percentage change for most, difference for 'USGG2YR Index'
 rets = pd.DataFrame()
 for sid in sids:
     rets[sid] = pxs[sid].pct_change()
 
-# Drop NaN values resulting from the percentage change or difference calculation
 rets.dropna(inplace=True)
 
-# Set rolling window size (e.g., 14 days)
 window_size = 60
 
-# Calculate rolling correlations
 rolling_corrs = rets.rolling(window=window_size).corr()
 
-# Visualize the rolling correlations
-# We will plot the correlation of each security with 'SPX Index' as an example
 base_security = sids[0]
 other_securities = [sid for sid in sids if sid != base_security]
 
