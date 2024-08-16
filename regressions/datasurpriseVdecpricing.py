@@ -19,7 +19,7 @@ mgr = dm.BbgDataManager()
 mgr.sid_result_mode = 'frame'
 
 # Get the historical data for the dependent and independent variables
-independent_data = mgr[independent_variables].get_historical(['PX_LAST'], start_date, end_date) * 100 
+independent_data = mgr[independent_variables].get_historical(['PX_LAST'], start_date, end_date) 
 # change to returns if needed
 # independent_data = independent_data - independent_data.shift(1)
 independent_data.columns = [col[0] for col in independent_data.columns]
@@ -63,9 +63,9 @@ print(model.summary())
 # Place the regression equation on the plot
 plt.text(0.05, 0.95, regression_eq, transform=plt.gca().transAxes, fontsize=12, verticalalignment='top', color='black')
 
-plt.title('EURUSD vs 1y1y US-EU rates')
-plt.xlabel('1y1y US-EU Rates')
-plt.ylabel('EURUSD Curncy')
+plt.title(f'{dependent_variable} vs {independent_variables}')
+plt.xlabel(f'{independent_variables}')
+plt.ylabel(f'{dependent_variable}')
 plt.grid(True)
 plt.show()
 
